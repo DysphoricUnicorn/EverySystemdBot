@@ -9,6 +9,7 @@ Honestly, why would you want to deploy this? Whatever.. Here's how you'd do that
 1. Fetch the code
 2. Copy `settings.example.json` to `settings.json`
 3. Fill in your values
-4. run `python3 every_systemd.py`
-5. (optional) create a cronjob to run it automatically
-6. (optional) create a pull request adding more words to the dictionary (please)
+4. Install dependencies with `pip install`
+5. run `python3 every_systemd.py`
+6. (optional) create a cronjob to run it automatically
+7. (optional) create a pull request adding more words to the dictionary (please)
