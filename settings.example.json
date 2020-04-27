@@ -1,5 +1,6 @@
 {
   "mastodon_url": "your_bots_instance_url",
   "mastodon_access_token": "your_bots_access_token",
-  "random_word_max_tries": 5
+  "random_word_max_tries": 5,
+  "default_cn": "a_string_you_want_as_cn_for_your_posts"
 }

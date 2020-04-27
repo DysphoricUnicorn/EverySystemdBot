@@ -8,6 +8,7 @@ class EverySystemd:
     mastodon = None
     debug_mode = None
     word_max_tries = None
+    default_cn = ""
 
     def __init__(self, debug_mode):
         try:
@@ -20,6 +21,7 @@ class EverySystemd:
             self.word_max_tries = settings['random_word_max_tries']
             self.debug_mode = debug_mode
             self.word_list = json.load(open('dict.json'))
+            self.default_cn = settings["default_cn"]
         except IndexError:
             print("[ERROR] settings.json was not found or didn't contain all needed values. Please check if it is "
                   + "configured properly")
@@ -27,14 +29,22 @@ class EverySystemd:
 
     def do_shitpost(self):
         word = self.get_random_word()
-        self.mastodon.status_post(status="systemd-" + word + "d", spoiler_text="Bot generated tech shitpost",
+        cn = self.get_cn(word)
+        self.mastodon.status_post(status="systemd-" + word[0] + "d", spoiler_text=cn,
                                   language="En", visibility="unlisted")
+
+    def get_cn(self, word):
+        try:
+            cn = self.default_cn + ", " + word[1],
+        except IndexError:
+            cn = self.default_cn
+        return cn
 
     def get_random_word(self):
         random_word = 'None'
         tries = 0
         while random_word == 'None' or tries >= self.word_max_tries or random_word[len(random_word) - 1] == 'd':
-            random_word = self.word_list[random.randint(0, len(self.word_list) -1)]
+            random_word = self.word_list[random.randint(0, len(self.word_list) - 1)]
             tries += 1
         if tries == self.word_max_tries:
             print("[ERROR] Could not come up with a word within " + str(self.word_max_tries) + " attempts.")
